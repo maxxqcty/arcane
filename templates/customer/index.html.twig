@@ -138,12 +138,17 @@
 
                 <!-- Action Buttons -->
                 <div class="flex gap-2 mt-auto">
-                    <a href="{{ path('app_customer_edit', {'id': customer.id}) }}" class="flex-1 rounded-lg bg-transparent border border-[#db352b] text-[#db352b] px-4 py-2 text-sm font-medium text-center hover:bg-[#db352b]/10 transition">
-                        Edit
-                    </a>
-                    <a href="{{ path('app_customer_show', {'id': customer.id}) }}" class="flex-1 rounded-lg bg-red-900/10 border border-red-500/50 text-red-400 px-4 py-2 text-sm font-medium text-center hover:bg-red-900/20 transition">
-                        Show
-                    </a>
+                   <button 
+    data-edit-url="{{ path('app_customer_edit', {'id': customer.id}) }}"
+    class="flex-1 rounded-lg bg-transparent border border-[#db352b] text-[#db352b] px-4 py-2 text-sm font-medium text-center hover:bg-[#db352b]/10 transition open-edit-modal">
+    Edit
+</button>
+
+                <button 
+    data-show-url="{{ path('app_customer_show', {'id': customer.id}) }}"
+    class="flex-1 rounded-lg bg-red-900/10 border border-red-500/50 text-red-400 px-4 py-2 text-sm font-medium text-center hover:bg-red-900/20 transition open-show-modal">
+    Show
+</button>
                 </div>
 
             </div>
@@ -153,4 +158,74 @@
         {% endfor %}
     </div>
 </div>
+
+<!-- Modal Container (Initially Hidden) -->
+<div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+    <div id="editModalContent">
+    </div>
+</div>
+
+
+<!-- Show Modal (Initially Hidden) -->
+<div id="showModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+    <div id="showModalContent" class="w-full max-w-2xl p-6 rounded-2xl"></div>
+</div>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Define all modal types (Edit and Show)
+    const modals = [
+        {
+            buttons: document.querySelectorAll('.open-edit-modal'),
+            modal: document.getElementById('editModal'),
+            content: document.getElementById('editModalContent'),
+            urlAttr: 'data-edit-url',
+            errorMsg: 'Error loading form.'
+        },
+        {
+            buttons: document.querySelectorAll('.open-show-modal'),
+            modal: document.getElementById('showModal'),
+            content: document.getElementById('showModalContent'),
+            urlAttr: 'data-show-url',
+            errorMsg: 'Error loading details.'
+        }
+    ];
+
+    modals.forEach(({ buttons, modal, content, urlAttr, errorMsg }) => {
+        if (!modal || !content || !buttons.length) return; // Skip if not found
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const url = btn.getAttribute(urlAttr);
+                modal.classList.remove('hidden');
+                content.innerHTML = '<div class="text-center py-10 text-gray-400">Loading...</div>';
+
+                try {
+                    const response = await fetch(url);
+                    const html = await response.text();
+                    content.innerHTML = html;
+
+                    // Close modal when clicking close button
+                    const closeBtn = content.querySelector('.close-modal');
+                    if (closeBtn) {
+                        closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+                    }
+                } catch (error) {
+                    content.innerHTML = `<div class="text-center text-red-400 py-10">${errorMsg}</div>`;
+                }
+            });
+        });
+
+        // Close modal when clicking outside content
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.add('hidden');
+        });
+    });
+});
+</script>
+
+
+
 {% endblock %}

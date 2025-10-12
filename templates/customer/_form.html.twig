@@ -1,19 +1,41 @@
-{{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+{# templates/customer/_form.html.twig #}
+
+{# Detect whether we are editing or adding a new customer #}
+{{ form_start(form, {
+    'action': customer.id is defined
+        ? path('app_customer_edit', {'id': customer.id})
+        : path('app_customer_new'),
+    'method': 'POST',
+    'attr': {'class': 'space-y-6'}
+}) }}
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     {% for child in form %}
-        <div>
-            {{ form_label(child, null, {'label_attr': {'class': 'block text-sm font-medium text-[#DB352B] mb-1'}}) }}
-            {{ form_widget(child, {'attr': {
-                'class': 'w-full rounded-lg border border-[#DB352B] bg-[#181818] px-3 py-2 text-white placeholder-[#DB352B] focus:outline-none focus:ring-2 focus:ring-[#DB352B] focus:border-[#DB352B]'
-            }}) }}
-            {{ form_errors(child, {'attr': {'class': 'text-red-500 text-sm mt-1'}}) }}
-        </div>
+        {% if child.vars.name != '_token' %} {# ✅ Skip the CSRF token field #}
+            <div>
+                {{ form_label(child, null, {
+                    'label_attr': {
+                        'class': 'block text-sm font-medium text-[#DB352B] mb-1'
+                    }
+                }) }}
+                {{ form_widget(child, {
+                    'attr': {
+                        'class': 'w-full rounded-lg border border-[#DB352B] bg-[#181818] px-3 py-2 text-white placeholder-[#DB352B] focus:outline-none focus:ring-2 focus:ring-[#DB352B] focus:border-[#DB352B]'
+                    }
+                }) }}
+                {{ form_errors(child, {
+                    'attr': {'class': 'text-red-500 text-sm mt-1'}
+                }) }}
+            </div>
+        {% endif %}
     {% endfor %}
 </div>
 
-<button type="submit" class="w-full md:w-auto rounded-lg bg-[#DB352B] px-4 py-2 text-white font-medium shadow hover:bg-red-700 transition-colors">
-    {{ button_label|default('Save') }}
-</button>
+<div class="flex justify-end mt-6">
+    <button type="submit"
+        class="rounded-lg bg-[#DB352B] px-5 py-2.5 text-white font-medium shadow hover:bg-red-700 transition-colors">
+        {{ button_label|default('Save') }}
+    </button>
+</div>
 
-{{ form_end(form) }}
+{{ form_end(form, { 'render_rest': false }) }} {# ✅ Prevents auto-rendering hidden fields like _token #}
