@@ -56,10 +56,86 @@
     </div>
 </div>
 
+
+<!-- FILTER AND SEARCH CONTROLS -->
+<div class="mb-8 flex flex-col md:flex-row items-center gap-4">
+
+    <!-- Search Input -->
+    <div class="relative flex-grow w-full">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" 
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+        </svg>
+        <input type="text" id="customerSearch" 
+               placeholder="Search by name or code..." 
+               class="w-full pl-10 pr-4 py-3 rounded-xl bg-[#222222] border border-[#333333] text-white placeholder-gray-500 
+                      focus:ring-2 focus:ring-[#db352b] focus:border-transparent transition duration-200 outline-none" />
+    </div>
+
+    <!-- Status Filter -->
+    <div class="relative w-full md:w-48">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5 pointer-events-none" 
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M5 13l4 4L19 7" />
+        </svg>
+        <select id="statusFilter" 
+                class="w-full pl-10 pr-8 py-3 rounded-xl bg-[#222222] border border-[#333333] text-white cursor-pointer
+                       focus:ring-2 focus:ring-[#db352b] focus:border-transparent transition duration-200 appearance-none">
+            <option value="all">All Statuses</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+        </select>
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4 pointer-events-none" 
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M19 9l-7 7-7-7" />
+        </svg>
+    </div>
+
+    <!-- Membership Filter -->
+    <div class="relative w-full md:w-56">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5 pointer-events-none" 
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M12 8c1.104 0 2-.896 2-2s-.896-2-2-2-2 .896-2 2 .896 2 2 2zM4 20v-1a7.5 7.5 0 0115 0v1M4 20h16" />
+        </svg>
+        <select id="membershipFilter" 
+                class="w-full pl-10 pr-8 py-3 rounded-xl bg-[#222222] border border-[#333333] text-white cursor-pointer
+                       focus:ring-2 focus:ring-[#db352b] focus:border-transparent transition duration-200 appearance-none">
+            <option value="all">All Memberships</option>
+            <option value="vip">VIP</option>
+            <option value="premium">Premium</option>
+            <option value="standard">Standard</option>
+        </select>
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4 pointer-events-none" 
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M19 9l-7 7-7-7" />
+        </svg>
+    </div>
+</div>
+
+
+
+
+
     <!-- Customer Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for customer in customers %}
-        <div class="rounded-2xl bg-[#222222] shadow-lg hover:shadow-2xl transition-all duration-300 border border-[#333333] overflow-hidden">
+       <div 
+    class="customer-card rounded-2xl bg-[#222222] shadow-lg hover:shadow-2xl transition-all duration-300 border border-[#333333] overflow-hidden"
+    data-name="{{ customer.name|lower }}"
+    data-code="{{ customer.customerCode|lower }}"
+    data-status="{{ customer.status|lower }}"
+    data-membership="{{ customer.membership|lower }}"
+>
             <div class="p-6 flex flex-col h-full justify-between">
 
                 <!-- Header -->
@@ -188,7 +264,60 @@
 
 
 <script>
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
+
+  const customerCards = document.querySelectorAll('.customer-card');
+    const searchInput = document.getElementById('customerSearch');
+    const statusFilter = document.getElementById('statusFilter');
+    const membershipFilter = document.getElementById('membershipFilter');
+    const noCustomersMessage = document.getElementById('noCustomersMessage');
+    
+    // Function to filter the customer cards
+    const filterCustomers = () => {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const statusValue = statusFilter.value;
+        const membershipValue = membershipFilter.value;
+        let visibleCount = 0;
+
+        customerCards.forEach(card => {
+            const name = card.getAttribute('data-name');
+            const code = card.getAttribute('data-code');
+            const status = card.getAttribute('data-status');
+            const membership = card.getAttribute('data-membership');
+
+            // 1. Search filter (Name or Code)
+            const matchesSearch = name.includes(searchTerm) || code.includes(searchTerm);
+
+            // 2. Status filter
+            const matchesStatus = (statusValue === 'all' || status === statusValue);
+
+            // 3. Membership filter
+            const matchesMembership = (membershipValue === 'all' || membership === membershipValue);
+
+            // Combine all filters
+            if (matchesSearch && matchesStatus && matchesMembership) {
+                card.style.display = 'block';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // Show/hide "No customers found" message
+        if (noCustomersMessage) {
+            noCustomersMessage.style.display = (visibleCount === 0) ? 'block' : 'none';
+        }
+    };
+
+    // Attach event listeners
+    searchInput.addEventListener('input', filterCustomers);
+    statusFilter.addEventListener('change', filterCustomers);
+    membershipFilter.addEventListener('change', filterCustomers);
+
+
     // Define all modal types (Edit and Show)
     const modals = [
     {
