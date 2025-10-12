@@ -15,10 +15,22 @@ use Symfony\Component\Routing\Attribute\Route;
 final class CustomerController extends AbstractController
 {
     #[Route(name: 'app_customer_index', methods: ['GET'])]
-    public function index(CustomerRepository $customerRepository): Response
+     public function index(CustomerRepository $customerRepository): Response
     {
+        $customers = $customerRepository->findAll();
+
+        // Calculate summary data
+        $totalCustomers = count($customers);
+        $totalVIP = count(array_filter($customers, fn($c) => $c->getMembership() === 'VIP'));
+        $inactiveUsers = count(array_filter($customers, fn($c) => $c->getStatus() !== 'Active'));
+        $totalRevenue = array_sum(array_map(fn($c) => $c->getTotalSpent(), $customers));
+
         return $this->render('customer/index.html.twig', [
-            'customers' => $customerRepository->findAll(),
+            'customers' => $customers,
+            'totalCustomers' => $totalCustomers,
+            'totalVIP' => $totalVIP,
+            'inactiveUsers' => $inactiveUsers,
+            'totalRevenue' => $totalRevenue,
         ]);
     }
 
