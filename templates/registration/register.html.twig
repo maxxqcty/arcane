@@ -1,19 +1,62 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Register{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
 
-    {{ form_errors(registrationForm) }}
+<div class="flex items-center justify-center bg-transparent font-['Roboto']">
+    <!-- Modal Card -->
+    <div class="bg-[#181818] text-white rounded-2xl shadow-2xl w-full max-w-md p-8 border border-[#2c2c2c]">
+        
+        <!-- Header -->
+        <h1 class="text-3xl font-semibold text-center mb-8 text-[#db352b] font-['Oswald']">Create Account</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+        <!-- Form Errors -->
+        {{ form_errors(registrationForm) }}
+        
+        <!-- Registration Form -->
+        {{ form_start(registrationForm, {
+            'action': path('app_register'),  # ensures modal submits to registration controller
+            'method': 'POST',
+            'attr': {'class': 'space-y-5'}
         }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            
+            <!-- Username -->
+            <div>
+                {{ form_label(registrationForm.username, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-400 mb-1'}}) }}
+                {{ form_widget(registrationForm.username, {'attr': {
+                    'class': 'w-full p-3 bg-[#222222] border border-[#333333] rounded-lg focus:ring-2 focus:ring-[#db352b] focus:outline-none placeholder-gray-500'
+                }}) }}
+            </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            <!-- Password -->
+            <div>
+                {{ form_label(registrationForm.plainPassword, 'Password', {'label_attr': {'class': 'block text-sm font-medium text-gray-400 mb-1'}}) }}
+                {{ form_widget(registrationForm.plainPassword, {'attr': {
+                    'class': 'w-full p-3 bg-[#222222] border border-[#333333] rounded-lg focus:ring-2 focus:ring-[#db352b] focus:outline-none placeholder-gray-500'
+                }}) }}
+            </div>
+
+            <!-- Agree Terms -->
+            <div class="flex items-center gap-2">
+                {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'accent-[#db352b] w-4 h-4'}}) }}
+                {{ form_label(registrationForm.agreeTerms, 'I agree to the terms', {'label_attr': {'class': 'text-sm text-gray-400 select-none'}}) }}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" 
+                class="w-full bg-[#db352b] hover:bg-[#b52a22] text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-200 active:scale-95">
+                Register
+            </button>
+
+        {{ form_end(registrationForm) }}
+
+        <!-- Footer -->
+        <p class="text-center text-sm text-gray-500 mt-6">
+            Already have an account?
+            <a href="{{ path('app_login') }}" class="text-[#db352b] hover:underline">Sign in</a>
+        </p>
+
+    </div>
+</div>
 {% endblock %}
