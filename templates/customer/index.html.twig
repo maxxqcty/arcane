@@ -14,13 +14,20 @@
             <h1 class="font-oswald text-3xl tracking-wide text-white mb-2">CUSTOMER MANAGEMENT</h1>
             <p class="text-[#b0b0b0]">Manage customer accounts, memberships, and information</p>
         </div>
+<button 
+    data-new-url="{{ path('app_customer_new') }}" 
+    class="inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-all duration-200 h-10 px-4 bg-[#db352b] hover:bg-[#b52a22] active:scale-95 text-white shadow-md w-full lg:w-auto open-new-modal">
 
-        <a href="{{ path('app_customer_new') }}" class="inline-flex items-center justify-center rounded-lg text-sm font-medium transition-colors h-10 py-2 px-4 bg-[#db352b] text-white shadow-md w-full lg:w-auto">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 mr-2">
-                <path d="M12 5v14M5 12h14"/>
-            </svg>
-            Add Customer
-        </a>
+    <svg xmlns="http://www.w3.org/2000/svg" 
+         class="h-5 w-5 flex-shrink-0" 
+         fill="none" stroke="currentColor" 
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 5v14M5 12h14"/>
+    </svg>
+
+    <span>Add Customer</span>
+</button>
+
     </div>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -45,7 +52,7 @@
     <!-- Total Revenue -->
     <div class="bg-[#222222] rounded-xl shadow p-6 flex flex-col items-start hover:shadow-2xl transition">
         <p class="text-sm text-[#b0b0b0]">Total Revenue</p>
-        <h2 class="font-oswald text-2xl text-green-400 mt-2">${{ totalRevenue|number_format(2) }}</h2>
+        <h2 class="font-oswald text-2xl text-green-400 mt-2">₱{{ totalRevenue|number_format(2) }}</h2>
     </div>
 </div>
 
@@ -159,6 +166,13 @@
     </div>
 </div>
 
+
+<!-- New Customer Modal -->
+<div id="newModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+    <div id="newModalContent" class="w-full max-w-2xl p-6 rounded-2xl"></div>
+</div>
+
+
 <!-- Modal Container (Initially Hidden) -->
 <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
     <div id="editModalContent">
@@ -177,21 +191,29 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Define all modal types (Edit and Show)
     const modals = [
-        {
-            buttons: document.querySelectorAll('.open-edit-modal'),
-            modal: document.getElementById('editModal'),
-            content: document.getElementById('editModalContent'),
-            urlAttr: 'data-edit-url',
-            errorMsg: 'Error loading form.'
-        },
-        {
-            buttons: document.querySelectorAll('.open-show-modal'),
-            modal: document.getElementById('showModal'),
-            content: document.getElementById('showModalContent'),
-            urlAttr: 'data-show-url',
-            errorMsg: 'Error loading details.'
-        }
-    ];
+    {
+        buttons: document.querySelectorAll('.open-new-modal'),
+        modal: document.getElementById('newModal'),
+        content: document.getElementById('newModalContent'),
+        urlAttr: 'data-new-url',
+        errorMsg: 'Error loading new customer form.'
+    },
+    {
+        buttons: document.querySelectorAll('.open-edit-modal'),
+        modal: document.getElementById('editModal'),
+        content: document.getElementById('editModalContent'),
+        urlAttr: 'data-edit-url',
+        errorMsg: 'Error loading edit form.'
+    },
+    {
+        buttons: document.querySelectorAll('.open-show-modal'),
+        modal: document.getElementById('showModal'),
+        content: document.getElementById('showModalContent'),
+        urlAttr: 'data-show-url',
+        errorMsg: 'Error loading details.'
+    }
+];
+
 
     modals.forEach(({ buttons, modal, content, urlAttr, errorMsg }) => {
         if (!modal || !content || !buttons.length) return; // Skip if not found
@@ -216,11 +238,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     content.innerHTML = `<div class="text-center text-red-400 py-10">${errorMsg}</div>`;
                 }
             });
-        });
-
-        // Close modal when clicking outside content
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.classList.add('hidden');
         });
     });
 });
