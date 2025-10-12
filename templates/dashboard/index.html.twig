@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Arcane Desk{% endblock %}</title>
+    <title>Arcane Desk Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        // Custom Tailwind theme colors
         tailwind.config = {
             theme: {
                 extend: {
@@ -19,7 +20,6 @@
     </script>
 </head>
 <body class="flex bg-darkbg text-white min-h-screen">
-
     <!-- Sidebar -->
     <aside class="w-64 bg-darkbg shadow-md flex flex-col">
         <div class="p-6 border-b border-gray-700">
@@ -27,9 +27,9 @@
             <p class="text-gray-400 mt-1">Admin</p>
         </div>
         <nav class="flex-1 p-4 space-y-2">
-            <a href="{{ path('app_dashboard') }}" class="block p-2 rounded hover:bg-primary/20">Dashboard</a>
+            <a href="#" class="block p-2 rounded hover:bg-primary/20">Dashboard</a>
             <a href="#" class="block p-2 rounded hover:bg-primary/20">Services</a>
-            <a href="{{ path('app_customer_index') }}" class="block p-2 rounded hover:bg-primary/20">User Management</a>
+     <a href="{{ path('app_customer_index') }}" class="block p-2 rounded hover:bg-primary/20">User Management</a>
             <a href="#" class="block p-2 rounded hover:bg-primary/20">Computer Management</a>
             <a href="#" class="block p-2 rounded hover:bg-primary/20">Inventory</a>
             <a href="#" class="block p-2 rounded hover:bg-primary/20">Reports & Analytics</a>
@@ -44,11 +44,9 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 p-6 overflow-auto">
-        {% block body %}
-        <!-- Individual page content will be injected here -->
-        {% endblock %}
+    <main class="flex-1 p-6">
+        <h2 class="text-3xl font-bold mb-4 text-primary">Dashboard</h2>
+        <p>Welcome to Arcane Desk Admin Panel!</p>
     </main>
-
 </body>
 </html>

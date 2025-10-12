@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Customer{% endblock %}
+
+{% block body %}
+<div class="p-6">
+
+    <!-- Header -->
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+        <h1 class="font-oswald text-3xl tracking-wide text-white">Create New Customer</h1>
+        <a href="{{ path('app_customer_index') }}" class="inline-flex items-center justify-center rounded-lg text-sm font-medium transition-colors h-10 px-4 bg-accent text-white shadow-md">
+            Back to List
+        </a>
+    </div>
+
+    <!-- Form Card -->
+    <div class="rounded-xl border border-border bg-card shadow-lg p-6 max-w-2xl mx-auto">
+        {{ include('customer/_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}
