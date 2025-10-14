@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcane Desk - Welcome</title>
+
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Load Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Scrollbar */
+        body::-webkit-scrollbar { width: 8px; }
+        body::-webkit-scrollbar-thumb { background-color: #db352b; border-radius: 4px; }
+        body::-webkit-scrollbar-track { background: #181818; }
+
+        /* Modal styling */
+        .modal-backdrop { transition: opacity 0.3s ease; z-index: 99; }
+        .modal-content { z-index: 100; }
+    </style>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'arcane-red': '#db352b',
+                        'near-black': '#181818',
+                        'light-gray': '#e5e7eb',
+                        'dark-gray': '#2a2a2a',
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        heading: ['Oswald', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-near-black text-light-gray font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-near-black bg-opacity-95 shadow-lg border-b border-gray-800">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-3 text-2xl font-bold text-light-gray">
+                <div class="w-10 h-10 rounded-xl bg-arcane-red flex items-center justify-center text-white font-black text-xl shadow-lg transition duration-300 hover:scale-105">
+                    A
+                </div>
+                <span>Arcane Desk</span>
+            </a>
+            
+            <!-- Buttons -->
+            <div class="flex space-x-4 items-center">
+                <button 
+                    class="open-login-modal text-sm font-medium py-2 px-4 rounded-lg border border-arcane-red text-arcane-red hover:bg-arcane-red hover:text-white transition duration-200"
+                    data-login-url="{{ path('app_login') }}">
+                    Log In
+                </button>
+
+                <button 
+                    class="open-signup-modal hidden sm:inline-flex bg-arcane-red text-white text-sm font-medium py-2 px-4 rounded-lg shadow-md hover:bg-red-700 transition duration-200"
+                    data-signup-url="{{ path('app_register') }}">
+                    Sign Up
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center text-center p-4 sm:p-8">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="font-heading text-6xl sm:text-8xl font-extrabold text-white leading-tight mb-4 tracking-wider uppercase">
+                Welcome to <span class="text-arcane-red">Arcane Desk</span>
+            </h1>
+            <p class="text-xl sm:text-3xl text-gray-400 font-light max-w-2xl mx-auto mb-12">
+                The leading management solution for high-performance internet cafes.
+            </p>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center text-gray-700 text-xs">
+        <p>&copy; 2025 Arcane Desk Systems. All rights reserved.</p>
+    </footer>
+
+    <!-- Modals -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+        <div id="loginModalContent" class="w-full max-w-md p-6 rounded-2xl"></div>
+    </div>
+
+    <div id="signupModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+        <div id="signupModalContent" class="w-full max-w-md p-6 rounded-2xl"></div>
+    </div>
+
+    <!-- Modal Logic -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modals = [
+            {
+                buttons: document.querySelectorAll('.open-login-modal'),
+                modal: document.getElementById('loginModal'),
+                content: document.getElementById('loginModalContent'),
+                urlAttr: 'data-login-url',
+                errorMsg: 'Error loading login form.'
+            },
+            {
+                buttons: document.querySelectorAll('.open-signup-modal'),
+                modal: document.getElementById('signupModal'),
+                content: document.getElementById('signupModalContent'),
+                urlAttr: 'data-signup-url',
+                errorMsg: 'Error loading signup form.'
+            }
+        ];
+
+        // Core modal logic
+        modals.forEach(({ buttons, modal, content, urlAttr, errorMsg }) => {
+            if (!modal || !content || !buttons.length) return;
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const url = btn.getAttribute(urlAttr);
+                    modal.classList.remove('hidden');
+                    content.innerHTML = '<div class="text-center py-10 text-gray-400">Loading...</div>';
+
+                    try {
+                        const response = await fetch(url);
+                        const html = await response.text();
+                        content.innerHTML = html;
+
+                        const closeBtn = content.querySelector('.close-modal');
+                        if (closeBtn) {
+                            closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+                        }
+                    } catch (error) {
+                        content.innerHTML = `<div class="text-center text-red-400 py-10">${errorMsg}</div>`;
+                    }
+                });
+            });
+        });
+
+        // Optional: Close modal on backdrop click
+        window.addEventListener('click', function(event) {
+            modals.forEach(({ modal }) => {
+                if (event.target === modal) modal.classList.add('hidden');
+            });
+        });
+    });
+    </script>
+
+</body>
+</html>

@@ -1,34 +1,70 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Log in!{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+<!-- Background -->
+<div class="flex items-center justify-center bg-[#101010] font-['Roboto']">
+    <!-- Modal Card -->
+    <div class="bg-[#181818] text-white rounded-2xl shadow-2xl w-full max-w-md p-8 relative border border-[#2c2c2c]">
+        
+        <!-- Header -->
+        <h1 class="text-3xl font-semibold text-center mb-8 text-[#db352b] font-['Oswald']">Welcome Back</h1>
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputUsername">Username</label>
-    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-    <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+        <!-- Error Alert -->
+        {% if error %}
+            <div class="bg-[#db352b]/20 text-[#ff8c82] border border-[#db352b] text-sm p-3 rounded-lg mb-4 text-center">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
 
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_remember_me"> Remember me
-        </label>
+        {% if app.user %}
+            <div class="mb-3 text-center">
+                Logged in as <span class="text-[#db352b] font-medium">{{ app.user.userIdentifier }}</span>.
+                <a href="{{ path('app_logout') }}" class="text-[#db352b] hover:underline ml-1">Logout</a>
+            </div>
+        {% endif %}
+
+        <!-- Login Form -->
+        <form method="post" action="{{ path('app_login') }}" class="space-y-5">
+            <!-- Username -->
+            <div>
+                <label for="inputUsername" class="block text-sm font-medium text-gray-400 mb-1">Username</label>
+                <input type="text" value="{{ last_username }}" name="username" id="inputUsername"
+                    class="w-full p-3 bg-[#222222] border border-[#333333] rounded-lg focus:ring-2 focus:ring-[#db352b] focus:outline-none placeholder-gray-500"
+                    placeholder="Enter your username" autocomplete="username" required autofocus>
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label for="inputPassword" class="block text-sm font-medium text-gray-400 mb-1">Password</label>
+                <input type="password" name="password" id="inputPassword"
+                    class="w-full p-3 bg-[#222222] border border-[#333333] rounded-lg focus:ring-2 focus:ring-[#db352b] focus:outline-none placeholder-gray-500"
+                    placeholder="Enter your password" autocomplete="current-password" required>
+            </div>
+
+            <!-- CSRF -->
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <!-- Remember Me -->
+            <div class="flex items-center gap-2">
+                <input type="checkbox" name="_remember_me" id="rememberMe" class="accent-[#db352b] w-4 h-4">
+                <label for="rememberMe" class="text-sm text-gray-400 select-none">Remember me</label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                class="w-full bg-[#db352b] hover:bg-[#b52a22] text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-200 active:scale-95">
+                Sign In
+            </button>
+        </form>
+
+        <!-- Footer -->
+        <p class="text-center text-sm text-gray-500 mt-6">
+            Forgot password?
+            <a href="#" class="text-[#db352b] hover:underline">Reset here</a>
+        </p>
     </div>
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+</div>
 {% endblock %}
