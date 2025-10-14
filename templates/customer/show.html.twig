@@ -33,9 +33,9 @@
             <div class="bg-[#262626] p-4 rounded-xl border border-[#333333]">
                 <p class="text-[#b0b0b0] text-xs uppercase">Status</p>
                 <span class="inline-flex items-center rounded-full border px-2 py-0.5 mt-1 text-xs font-semibold 
-                    {% if customer.status == 'Active' %}bg-green-500/15 text-green-400 border-green-700/40
+                    {% if customer.status.name == 'Active' %}bg-green-500/15 text-green-400 border-green-700/40
                     {% else %}bg-yellow-500/15 text-yellow-400 border-yellow-700/40{% endif %}">
-                    {{ customer.status|upper }}
+                    {{ customer.status.name |upper }}
                 </span>
             </div>
 
