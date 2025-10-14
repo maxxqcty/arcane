@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\CustomerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: CustomerRepository::class)]
 class Customer
@@ -45,7 +47,23 @@ class Customer
     #[ORM\Column(nullable: true)]
     private ?int $total_hours = null;
 
+    #[ORM\ManyToMany(targetEntity: Services::class)]
+    #[ORM\JoinTable(
+        name: "customer_services",
+        joinColumns: [new ORM\JoinColumn(name: "customer_id", referencedColumnName: "id")],
+        inverseJoinColumns: [new ORM\JoinColumn(name: "service_id", referencedColumnName: "id")]
+    )]
+    private Collection $services;
+
+    public function __construct()
+    {
+        $this->services = new ArrayCollection();
+    }
+
+    // Getters and setters
+
     public function getId(): ?int { return $this->id; }
+
     public function getName(): ?string { return $this->name; }
     public function setName(string $name): static { $this->name = $name; return $this; }
 
@@ -75,4 +93,24 @@ class Customer
 
     public function getTotalHours(): ?int { return $this->total_hours; }
     public function setTotalHours(?int $total_hours): static { $this->total_hours = $total_hours; return $this; }
+
+    /** @return Collection<int, Services> */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(Services $service): static
+    {
+        if (!$this->services->contains($service)) {
+            $this->services->add($service);
+        }
+        return $this;
+    }
+
+    public function removeService(Services $service): static
+    {
+        $this->services->removeElement($service);
+        return $this;
+    }
 }
