@@ -1,1 +1,209 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}Services Catalog{% endblock %}
+
+{% block body %}
+<div class="flex flex-col h-full p-6 bg-[#121212]">
+
+  <!-- Header -->
+  <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+    <div>
+      <h1 class="font-oswald text-3xl tracking-wide text-white mb-2">SERVICES CATALOG</h1>
+      <p class="text-[#b0b0b0]">Manage all internet cafe services</p>
+    </div>
+   <button class="inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-all duration-200 h-10 px-4 bg-[#db352b] text-white shadow-md w-full lg:w-auto active:scale-95">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 5v14M5 12h14"/>
+  </svg>
+  <span>Add Service</span>
+</button>
+
+  </div>
+
+  <!-- Search & Filter -->
+  <div class="flex flex-col md:flex-row gap-4 mb-6">
+    <div class="relative flex-1">
+      <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#b0b0b0]"></i>
+      <input type="text" placeholder="Search services..." 
+             class="w-full pl-10 py-2 rounded bg-[#222222] text-white placeholder-[#b0b0b0] border border-[#333333]">
+    </div>
+    <select class="w-full md:w-[200px] rounded bg-[#222222] text-white border border-[#333333] px-3 py-2">
+      <option>All Categories</option>
+      <option>Internet Access</option>
+      <option>Gaming</option>
+      <option>Business</option>
+      <option>Food & Drinks</option>
+      <option>Printing</option>
+    </select>
+  </div>
+
+  <!-- Services Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    {# Service 1 #}
+    <div class="relative bg-[#222222] rounded-2xl shadow-lg overflow-hidden">
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-2">
+          <i data-lucide="wifi" class="h-8 w-8 text-[#db352b]"></i>
+          <span class="bg-gray-600 text-xs px-2 py-1 rounded-full">Available</span>
+        </div>
+        <h2 class="text-xl font-oswald tracking-wide mb-1">BASIC INTERNET ACCESS</h2>
+        <p class="text-[#b0b0b0] mb-4">High-speed internet access with basic productivity software</p>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <i data-lucide="dollar-sign" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span>$2.50</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="clock" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span class="text-sm text-[#b0b0b0]">1 hour</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button class="w-full py-2 rounded border border-[#db352b] text-[#db352b] hover:bg-[#db352b] hover:text-white transition-all duration-200">Edit</button>
+          <button class="w-full py-2 rounded border border-gray-500 text-gray-500 hover:bg-gray-500 hover:text-white transition-all duration-200">Disable</button>
+        </div>
+      </div>
+    </div>
+
+    {# Service 2 #}
+    <div class="relative bg-[#222222] rounded-2xl shadow-lg overflow-hidden">
+      <span class="absolute -top-2 -right-2 bg-[#db352b] text-white text-xs px-2 py-1 rounded-full">Popular</span>
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-2">
+          <i data-lucide="gamepad-2" class="h-8 w-8 text-[#db352b]"></i>
+          <span class="bg-gray-600 text-xs px-2 py-1 rounded-full">Available</span>
+        </div>
+        <h2 class="text-xl font-oswald tracking-wide mb-1">GAMING STATION PREMIUM</h2>
+        <p class="text-[#b0b0b0] mb-4">High-end gaming PC with latest games and peripherals</p>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <i data-lucide="dollar-sign" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span>$8.00</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="clock" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span class="text-sm text-[#b0b0b0]">1 hour</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button class="w-full py-2 rounded border border-[#db352b] text-[#db352b] hover:bg-[#db352b] hover:text-white transition-all duration-200">Edit</button>
+          <button class="w-full py-2 rounded border border-gray-500 text-gray-500 hover:bg-gray-500 hover:text-white transition-all duration-200">Disable</button>
+        </div>
+      </div>
+    </div>
+
+    {# Service 3 #}
+    <div class="relative bg-[#222222] rounded-2xl shadow-lg overflow-hidden">
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-2">
+          <i data-lucide="monitor" class="h-8 w-8 text-[#db352b]"></i>
+          <span class="bg-gray-600 text-xs px-2 py-1 rounded-full">Available</span>
+        </div>
+        <h2 class="text-xl font-oswald tracking-wide mb-1">BUSINESS WORKSTATION</h2>
+        <p class="text-[#b0b0b0] mb-4">Professional setup with MS Office, design tools, and printing</p>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <i data-lucide="dollar-sign" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span>$5.00</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="clock" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span class="text-sm text-[#b0b0b0]">1 hour</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button class="w-full py-2 rounded border border-[#db352b] text-[#db352b] hover:bg-[#db352b] hover:text-white transition-all duration-200">Edit</button>
+          <button class="w-full py-2 rounded border border-gray-500 text-gray-500 hover:bg-gray-500 hover:text-white transition-all duration-200">Disable</button>
+        </div>
+      </div>
+    </div>
+
+    {# Service 4 #}
+    <div class="relative bg-[#222222] rounded-2xl shadow-lg overflow-hidden">
+      <span class="absolute -top-2 -right-2 bg-[#db352b] text-white text-xs px-2 py-1 rounded-full">Popular</span>
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-2">
+          <i data-lucide="coffee" class="h-8 w-8 text-[#db352b]"></i>
+          <span class="bg-gray-600 text-xs px-2 py-1 rounded-full">Available</span>
+        </div>
+        <h2 class="text-xl font-oswald tracking-wide mb-1">COFFEE & SNACKS</h2>
+        <p class="text-[#b0b0b0] mb-4">Fresh coffee, energy drinks, and light snacks</p>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <i data-lucide="dollar-sign" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span>$3.50</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="clock" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span class="text-sm text-[#b0b0b0]">One-time</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button class="w-full py-2 rounded border border-[#db352b] text-[#db352b] hover:bg-[#db352b] hover:text-white transition-all duration-200">Edit</button>
+          <button class="w-full py-2 rounded border border-green-600 text-green-600 hover:bg-green-600 hover:text-white transition-all duration-200">Enable</button>
+        </div>
+      </div>
+    </div>
+
+    {# Service 5 #}
+    <div class="relative bg-[#222222] rounded-2xl shadow-lg overflow-hidden">
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-2">
+          <i data-lucide="printer" class="h-8 w-8 text-[#db352b]"></i>
+          <span class="bg-gray-600 text-xs px-2 py-1 rounded-full">Available</span>
+        </div>
+        <h2 class="text-xl font-oswald tracking-wide mb-1">DOCUMENT PRINTING</h2>
+        <p class="text-[#b0b0b0] mb-4">Black & white and color printing services</p>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <i data-lucide="dollar-sign" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span>$0.25</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="clock" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span class="text-sm text-[#b0b0b0]">Per page</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button class="w-full py-2 rounded border border-[#db352b] text-[#db352b] hover:bg-[#db352b] hover:text-white transition-all duration-200">Edit</button>
+          <button class="w-full py-2 rounded border border-gray-500 text-gray-500 hover:bg-gray-500 hover:text-white transition-all duration-200">Disable</button>
+        </div>
+      </div>
+    </div>
+
+    {# Service 6 (Unavailable) #}
+    <div class="relative bg-[#222222] rounded-2xl shadow-lg overflow-hidden opacity-60">
+      <span class="absolute -top-2 -right-2 bg-[#db352b] text-white text-xs px-2 py-1 rounded-full">Popular</span>
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-2">
+          <i data-lucide="gamepad-2" class="h-8 w-8 text-[#db352b]"></i>
+          <span class="bg-gray-600 text-xs px-2 py-1 rounded-full">Unavailable</span>
+        </div>
+        <h2 class="text-xl font-oswald tracking-wide mb-1">EXTENDED GAMING</h2>
+        <p class="text-[#b0b0b0] mb-4">Extended gaming session with snacks included</p>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <i data-lucide="dollar-sign" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span>$20.00</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="clock" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span class="text-sm text-[#b0b0b0]">3 hours</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button class="w-full py-2 rounded border border-[#db352b] text-[#db352b] hover:bg-[#db352b] hover:text-white transition-all duration-200">Edit</button>
+          <button class="w-full py-2 rounded border border-green-600 text-green-600 hover:bg-green-600 hover:text-white transition-all duration-200">Enable</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://unpkg.com/lucide/dist/lucide.min.js"></script>
+<script>
+  lucide.createIcons();
+</script>
+{% endblock %}

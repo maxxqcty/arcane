@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Services Catalog{% endblock %}
+
+{% block body %}
+<div class="flex flex-col h-full p-6">
+
+  <!-- Header -->
+  <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+    <div>
+      <h1 class="font-oswald text-3xl tracking-wide text-white mb-2">SERVICES CATALOG</h1>
+      <p class="text-[#b0b0b0]">Browse and book our internet cafe services</p>
+    </div>
+    <button class="inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-all duration-200 h-10 px-4 bg-[#db352b] hover:bg-[#b52a22] active:scale-95 text-white shadow-md w-full lg:w-auto">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 5v14M5 12h14"/>
+      </svg>
+      <span>Add Service</span>
+    </button>
+  </div>
+
+  <!-- Search & Filter -->
+  <div class="flex flex-col md:flex-row gap-4 mb-6">
+    <div class="relative flex-1">
+      <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#b0b0b0]"></i>
+      <input type="text" placeholder="Search services..." 
+             class="w-full pl-10 py-2 rounded bg-[#222222] text-white placeholder-[#b0b0b0] border border-[#333333]">
+    </div>
+    <select class="w-full md:w-[200px] rounded bg-[#222222] text-white border border-[#333333] px-3 py-2">
+      <option>All Categories</option>
+      <option>Internet Access</option>
+      <option>Gaming</option>
+      <option>Business</option>
+      <option>Food & Drinks</option>
+      <option>Printing</option>
+    </select>
+  </div>
+
+  <!-- Services Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    
+    <!-- Example Card -->
+    <div class="relative bg-[#222222] rounded-2xl shadow-lg overflow-hidden">
+      <span class="absolute -top-2 -right-2 bg-[#db352b] text-white text-xs px-2 py-1 rounded-full">Popular</span>
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-2">
+          <i data-lucide="wifi" class="h-8 w-8 text-[#db352b]"></i>
+        </div>
+        <h2 class="text-xl font-oswald tracking-wide mb-1">BASIC INTERNET ACCESS</h2>
+        <p class="text-[#b0b0b0] mb-4">High-speed internet access with basic productivity software</p>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <i data-lucide="dollar-sign" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span>$2.50</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="clock" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span class="text-sm text-[#b0b0b0]">1 hour</span>
+          </div>
+        </div>
+        <button class="w-full bg-[#db352b] hover:bg-[#b52a22] text-white py-2 rounded shadow-md transition-all duration-200 active:scale-95">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+
+    <!-- Another Card -->
+    <div class="relative bg-[#222222] rounded-2xl shadow-lg overflow-hidden">
+      <span class="absolute -top-2 -right-2 bg-[#db352b] text-white text-xs px-2 py-1 rounded-full">Popular</span>
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-2">
+          <i data-lucide="gamepad-2" class="h-8 w-8 text-[#db352b]"></i>
+        </div>
+        <h2 class="text-xl font-oswald tracking-wide mb-1">GAMING STATION PREMIUM</h2>
+        <p class="text-[#b0b0b0] mb-4">High-end gaming PC with latest games and peripherals</p>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <i data-lucide="dollar-sign" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span>$8.00</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="clock" class="h-4 w-4 text-[#b0b0b0]"></i>
+            <span class="text-sm text-[#b0b0b0]">1 hour</span>
+          </div>
+        </div>
+        <button class="w-full bg-[#db352b] hover:bg-[#b52a22] text-white py-2 rounded shadow-md transition-all duration-200 active:scale-95">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+
+    <!-- Add more cards similarly -->
+
+  </div>
+</div>
+
+<script src="https://unpkg.com/lucide/dist/lucide.min.js"></script>
+<script>
+  lucide.createIcons();
+</script>
+{% endblock %}
