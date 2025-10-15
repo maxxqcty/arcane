@@ -1,0 +1,20 @@
+ <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+        <div>
+            <h1 class="font-oswald text-3xl tracking-wide text-white mb-2">CUSTOMER MANAGEMENT</h1>
+            <p class="text-[#b0b0b0]">Manage customer accounts, memberships, and information</p>
+        </div>
+<button  
+    data-new-url="{{ path('app_customer_new') }}" 
+    class="inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-all duration-200 h-10 px-4 bg-[#db352b] hover:bg-[#b52a22] active:scale-95 text-white shadow-md w-full lg:w-auto open-new-modal">
+
+    <svg xmlns="http://www.w3.org/2000/svg" 
+         class="h-5 w-5 flex-shrink-0" 
+         fill="none" stroke="currentColor" 
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 5v14M5 12h14"/>
+    </svg>
+
+    <span>Add Customer</span>
+</button>
+
+    </div>

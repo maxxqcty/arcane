@@ -1,103 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Arcane Desk{% endblock %}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#db352b',
-                        darkbg: '#181818',
-                        sidebar: '#1f1f1f'
-                    }
-                }
-            }
-        }
-    </script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<body class="flex bg-darkbg text-white min-h-screen font-sans">
-
+<body class="flex bg-darkbg text-white min-h-screen">
     <!-- Sidebar -->
-    <aside class="w-64 bg-sidebar border-r border-gray-800 flex flex-col">
-        <!-- Logo -->
-        <div class="flex items-center gap-3 p-6 border-b border-gray-800">
-            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <i data-lucide="shield" class="w-6 h-6 text-white"></i>
-            </div>
-            <div>
-                <h1 class="text-xl font-bold text-primary tracking-wide">ARCANE DESK</h1>
-                <p class="text-gray-400 text-xs mt-1">Admin Panel</p>
-            </div>
-        </div>
-
-        <!-- Navigation -->
-        <nav class="flex-1 p-4 space-y-1 text-gray-300">
-            <a href="{{ path('app_dashboard') }}"
-               class="flex items-center p-2 rounded-lg transition 
-               {% if app.request.attributes.get('_route') == 'app_dashboard' %}bg-primary/20 text-white{% else %}hover:bg-primary/20{% endif %}">
-                <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i> Dashboard
-            </a>
-
-            <a href="#"
-               class="flex items-center p-2 rounded-lg transition 
-               {% if app.request.attributes.get('_route') == 'app_services' %}bg-primary/20 text-white{% else %}hover:bg-primary/20{% endif %}">
-                <i data-lucide="briefcase" class="w-5 h-5 mr-3"></i> Services
-            </a>
-
-            <a href="{{ path('app_customer_index') }}"
-               class="flex items-center p-2 rounded-lg transition 
-               {% if app.request.attributes.get('_route') == 'app_customer_index' %}bg-primary/20 text-white{% else %}hover:bg-primary/20{% endif %}">
-                <i data-lucide="users" class="w-5 h-5 mr-3"></i> User Management
-            </a>
-
-            <a href="#"
-               class="flex items-center p-2 rounded-lg transition 
-               {% if app.request.attributes.get('_route') == 'app_computer' %}bg-primary/20 text-white{% else %}hover:bg-primary/20{% endif %}">
-                <i data-lucide="monitor" class="w-5 h-5 mr-3"></i> Computer Management
-            </a>
-
-            <a href="#"
-               class="flex items-center p-2 rounded-lg transition 
-               {% if app.request.attributes.get('_route') == 'app_inventory' %}bg-primary/20 text-white{% else %}hover:bg-primary/20{% endif %}">
-                <i data-lucide="package" class="w-5 h-5 mr-3"></i> Inventory
-            </a>
-
-            <a href="#"
-               class="flex items-center p-2 rounded-lg transition 
-               {% if app.request.attributes.get('_route') == 'app_reports' %}bg-primary/20 text-white{% else %}hover:bg-primary/20{% endif %}">
-                <i data-lucide="bar-chart-3" class="w-5 h-5 mr-3"></i> Reports & Analytics
-            </a>
-
-            <a href="#"
-               class="flex items-center p-2 rounded-lg transition 
-               {% if app.request.attributes.get('_route') == 'app_settings' %}bg-primary/20 text-white{% else %}hover:bg-primary/20{% endif %}">
-                <i data-lucide="settings" class="w-5 h-5 mr-3"></i> System Settings
-            </a>
-        </nav>
-
-        <!-- Footer -->
-        <div class="p-4 border-t border-gray-800 space-y-2">
-            <button class="flex items-center justify-between w-full p-2 rounded-lg hover:bg-primary/20 transition">
-                <span class="flex items-center"><i data-lucide="bell" class="w-5 h-5 mr-2"></i> Notifications</span>
-                <span class="bg-primary text-white rounded-full px-2 text-xs">3</span>
-            </button>
-            <button class="flex items-center w-full p-2 rounded-lg hover:bg-primary/20 transition">
-                <i data-lucide="log-out" class="w-5 h-5 mr-3"></i> Logout
-            </button>
-        </div>
-    </aside>
-
+   {% include 'components/sidebar.html.twig' %}
     <!-- Main Content -->
-    <main class="flex-1 p-8 overflow-auto">
+    <main class="flex-1 p-6 overflow-auto">
         {% block body %}
+        <!-- Individual page content will be injected here -->
         {% endblock %}
     </main>
 
-    <script>lucide.createIcons();</script>
 </body>
 </html>

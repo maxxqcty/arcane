@@ -1,0 +1,32 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+{% set cards = [
+    {'label': 'Total Customers', 'value': totalCustomers, 'icon': 'users', 'color': 'text-blue-400', 'footer': 'Active users count', 'highlight': false},
+    {'label': 'VIP Members', 'value': totalVIP, 'icon': 'star', 'color': 'text-yellow-400', 'footer': 'Premium subscribers', 'highlight': false},
+    {'label': 'Inactive Users', 'value': inactiveUsers, 'icon': 'user-x', 'color': 'text-red-400', 'footer': 'No activity in 30 days', 'highlight': false},
+    {'label': 'Total Revenue', 'value': '₱' ~ totalRevenue|number_format(2), 'icon': 'wallet', 'color': 'text-green-400', 'footer': 'Updated today', 'highlight': true}
+] %}
+    {% for card in cards %}
+    <div class="group bg-[#1e1e1e] border border-[#2a2a2a] rounded-2xl shadow-lg p-6 flex flex-col justify-between 
+                hover:border-[#3a3a3a] hover:shadow-xl hover:bg-[#262626] transition-all duration-300 ease-out">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm text-gray-400 tracking-wide">{{ card.label }}</p>
+                <h2 class="font-oswald text-3xl mt-2 {% if card.highlight %}text-green-400{% else %}text-white{% endif %}">
+                    {{ card.value }}
+                </h2>
+            </div>
+            <div class="p-3 rounded-xl bg-[#252525] group-hover:bg-[#333333] group-hover:scale-110 
+                        transition-all duration-300 ease-out shadow-inner">
+                <i data-lucide="{{ card.icon }}" class="{{ card.color }} w-6 h-6"></i>
+            </div>
+        </div>
+        <div class="flex justify-between items-center mt-4">
+            <p class="text-xs text-gray-500">{{ card.footer }}</p>
+            {% if card.highlight %}
+            <span class="text-[10px] font-medium text-green-400 bg-green-900/20 px-2 py-1 rounded-md">Live</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>

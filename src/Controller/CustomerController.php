@@ -22,10 +22,11 @@ final class CustomerController extends AbstractController
         // Calculate summary data
         $totalCustomers = count($customers);
         $totalVIP = count(array_filter($customers, fn($c) => $c->getMembership() === 'VIP'));
-        $inactiveUsers = count(array_filter($customers, fn($c) => $c->getStatus() !== 'Active'));
+$inactiveUsers = count(array_filter($customers, fn($c) => $c->getStatus()->getName() !== 'Active'));
+
         $totalRevenue = array_sum(array_map(fn($c) => $c->getTotalSpent(), $customers));
 
-        return $this->render('customer/index.html.twig', [
+        return $this->render('pages/customer/index.html.twig', [
             'customers' => $customers,
             'totalCustomers' => $totalCustomers,
             'totalVIP' => $totalVIP,
@@ -48,7 +49,7 @@ final class CustomerController extends AbstractController
             return $this->redirectToRoute('app_customer_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('customer/new.html.twig', [
+        return $this->render('pages/customer/actions/new.html.twig', [
             'customer' => $customer,
             'form' => $form,
         ]);
@@ -57,7 +58,7 @@ final class CustomerController extends AbstractController
     #[Route('/{id}', name: 'app_customer_show', methods: ['GET'])]
     public function show(Customer $customer): Response
     {
-        return $this->render('customer/show.html.twig', [
+        return $this->render('pages/customer/actions/show.html.twig', [
             'customer' => $customer,
         ]);
     }
@@ -74,7 +75,7 @@ final class CustomerController extends AbstractController
             return $this->redirectToRoute('app_customer_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('customer/edit.html.twig', [
+        return $this->render('pages/customer/actions/edit.html.twig', [
             'customer' => $customer,
             'form' => $form,
         ]);

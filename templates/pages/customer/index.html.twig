@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Customer Management{% endblock %}
+
+{% block body %}
+<!-- Import Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+<div class="p-6 font-roboto bg-[#181818] min-h-screen">
+
+    {% include 'pages/customer/modules/header.html.twig' %}
+    {% include 'pages/customer/modules/stats_cards.html.twig' %}
+    {% include 'pages/customer/modules/filter_search.html.twig' %}
+    {% include 'pages/customer/modules/customer_cards.html.twig' %}
+    {% include 'pages/customer/modules/modals.html.twig' %}
+
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
+<script src="{{ asset('js/script.js') }}"></script>
+
+
+{% endblock %}
